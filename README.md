@@ -178,33 +178,34 @@ Maven supports packaging and releasing Java applications in standard formats (JA
 
 ## Integration with DevOps Tools
 1. **Jenkins**
-Maven integrates seamlessly with Jenkins for automated builds in CI/CD pipelines. Jenkins can be configured to execute Maven goals (e.g., clean, install, deploy) on code pushes, providing quick feedback to developers and ensuring project integrity.
+Maven integrates seamlessly with Gitlab for automated builds in CI/CD pipelines. GitLab can be configured to execute Maven goals (e.g., clean, install, deploy) on code pushes, providing quick feedback to developers and ensuring project integrity.
 
-*Example Jenkins Pipeline*:
+*Example GitLab Pipeline*:
+---
+image: maven:3.9-eclipse-temurin-17
 
-```
-pipeline {
-    agent any
-    stages {
-        stage('Build') {
-            steps {
-                sh 'mvn clean install'
-            }
-        }
-        stage('Test') {
-            steps {
-                sh 'mvn test'
-            }
-        }
-        stage('Deploy') {
-            steps {
-                sh 'mvn deploy'
-            }
-        }
-    }
-}
+stages:
+  - build
+  - test
+  - deploy
 
-```
+build:
+  stage: build
+  script:
+    - mvn clean install
+
+test:
+  stage: test
+  script:
+    - mvn test
+
+deploy:
+  stage: deploy
+  script:
+    - mvn deploy
+  only:
+    - main
+--- 
 
 2. **SonarQube**
 Maven integrates with SonarQube for code quality analysis. Using the sonar-maven-plugin, Maven can analyze code and send quality metrics to SonarQube, enabling tracking of code health and adherence to best practices.
@@ -266,7 +267,7 @@ jobs:
 ```
 
 # Development Environment Project
-![maven-learning](maven-learning.drawio.png)
+![maven-learning](maven_build_lifecycle.png)
 
 ###### Project ToolBox 🧰
 - [Git](https://git-scm.com/) Git will be used to manage our application source code.
@@ -285,8 +286,8 @@ jobs:
      - Unzip and Push the code to the Repository you just provisioned
 
 2) **Setting up Maven Server**
-    - Create an Amazon Linux 2 VM instance and call it "maven-server"
-    - Instance type: t2.micro
+    - Create an Amazon Linux 2023 VM instance and call it "maven-server"
+    - Instance type: t3.micro
     - Security Group (Open): 22 to 0.0.0.0/0 or Your-IP
     - Key pair: Select or create a new keypair
     - Follow the installation steps in this repo: https://github.com/devopsmike-01/maven-learning-repo/blob/main/Maven-installation/maven-install.md
