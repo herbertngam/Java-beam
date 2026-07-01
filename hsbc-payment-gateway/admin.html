@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>BlueEagle • Admin Panel</title>
+  <link rel="stylesheet" th:href="@{/css/app.css}" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <div class="logo" aria-hidden="true">B</div>
+      <div>
+        <div class="brand-name">BlueEagle</div>
+        <div class="brand-sub">Admin Panel</div>
+      </div>
+    </div>
+
+    <div class="userbox">
+      <div class="user-meta">
+        <div class="hello">Signed in as,</div>
+        <div class="username" th:text="${username}">admin</div>
+      </div>
+
+      <a class="btn btn-secondary" th:href="@{/}">Back to dashboard</a>
+
+      <form th:action="@{/logout}" method="post">
+        <button class="btn btn-ghost" type="submit">Sign out</button>
+      </form>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="card">
+      <h1>Admin Panel</h1>
+      <p class="muted">
+        This page is only reachable by users with the <strong>ADMIN</strong> role.
+        It demonstrates role-based access control in Spring Security — try
+        logging in with the regular demo user and visiting this page to see it blocked.
+      </p>
+
+      <div class="note">
+        <strong>For students:</strong> this route's access rule lives in
+        <code>SecurityConfig.java</code> (<code>hasRole("ADMIN")</code>),
+        not in this template or the controller.
+      </div>
+    </section>
+
+    <footer class="footer muted">
+      © <span th:text="${#dates.format(#dates.createNow(), 'yyyy')}">2026</span> BlueEagle • For demo use only
+    </footer>
+  </main>
+</body>
+</html>
